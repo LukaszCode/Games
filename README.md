@@ -13,19 +13,25 @@ In this repository, you'll find a variety of games that I've created using diffe
 
 Here are the games currently in this repository:
 
-1. **SkyQuestSimulator**  
+1. **GuessTheNumber**  
+   - **Description:** A simple number guessing game with a basic UI in Python
+   - **Tech Stack:** Python, GUI (Tkinter library)  
+   - **Features:**   Random number generation, User interaction, Status prompt, Counting attempts
+   - **Status:** Complete
+
+2. **Pong**
+   - **Description** Basic Pong game with collision detection written in Python
+   - **Tech Stack:** Python
+   - **Features** Gameplay, Ball movement, bouncing of the walls, point count, collision detection
+   - **Status** In Progress
+
+4. **SkyQuestSimulator**  
    - **Description:** A simple desktop game with a GUI in C++  
    - **Tech Stack:** C++, GUI (Qt or SDL)
    - **Features:** Space exploration, GUI-based interactions  
    - **Status:** In Progress
 
-2. **[Game Name]**  
-   - **Description:** [Game Description]  
-   - **Tech Stack:** [Technologies used]  
-   - **Features:** [Game Features]  
-   - **Status:** [In Progress/Completed]
 
-_(Add more games as you progress)_
 
 ## 🌟 How to Play
 
@@ -33,5 +39,5 @@ To play the games, follow these simple steps:
 
 1. Clone this repository using the following command:
    ```bash
-   git clone https://github.com/yourusername/games.git
+   git clone https://github.com/LukaszCode/Games.git
 
