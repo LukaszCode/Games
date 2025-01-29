@@ -29,6 +29,17 @@ def draw_window(game_window, paddles, ball, width, height):
 
     pygame.display.update()
 
+def draw_paddle(self, game_window):
+    """
+    Draws the paddle on the game window.
+
+    Parameters:
+    - self: The paddle object to draw.
+    - game_window: The Pygame window surface to draw on.
+    """
+    pygame.draw.rect(game_window, self.COLOR, (self.x, self.y, self.width, self.height))
+
+
 def draw_center_line(game_window, width, height):
     """
     Draws the center line on the game window.

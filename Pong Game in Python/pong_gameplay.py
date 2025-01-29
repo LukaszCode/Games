@@ -26,6 +26,8 @@ def handle_key_paddle_movement(keys, left_paddle, right_paddle):
     elif keys[pygame.K_DOWN]:
         right_paddle.move(up=False, height=HEIGHT)
 
+
+
 def main():
     run = True
 
