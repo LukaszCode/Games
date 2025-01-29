@@ -1,11 +1,9 @@
 # Paddles class and objects for the pong game.
 
 import pygame
-from game_visuals import WHITE
 
 class Paddle:
-    COLOR = WHITE
-    VELOCITY = 4
+    VELOCITY = 10
 
     """
     Initializes a new instance of a paddle with specified coordinates and dimensions.

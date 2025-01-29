@@ -31,9 +31,11 @@ def handle_key_paddle_movement(keys, left_paddle, right_paddle):
 def main():
     run = True
 
-    left_paddle = Paddle(10, HEIGHT // 2 - 50, 20, 100)
-    right_paddle = Paddle(WIDTH - 30, HEIGHT // 2 - 50, 20, 100)
-    ball = Ball(WIDTH // 2, HEIGHT // 2, 10)
+    def reset_game():
+        """Resets the ball and paddles to their initial positions."""
+        return Paddle(10, HEIGHT // 2 - 50, 20, 100), Paddle(WIDTH - 30, HEIGHT // 2 - 50, 20, 100), Ball(WIDTH // 2, HEIGHT // 2, 10)
+
+    left_paddle, right_paddle, ball = reset_game()
 
     while run:
         clock.tick(FPS)
@@ -43,11 +45,21 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
                 break
+            
 
         keys = pygame.key.get_pressed()
         handle_key_paddle_movement(keys, left_paddle, right_paddle)
+        
+        # Pass paddles to ball.move() for collision detection
+        ball.move(HEIGHT, [left_paddle, right_paddle])
 
-        ball.move(HEIGHT)
+        # Check for ball going out of bounds
+        if ball.x - ball.radius <= 0:
+            #right_paddle.score += 1
+            left_paddle, right_paddle, ball = reset_game()
+        elif ball.x + ball.radius >= WIDTH:
+            #left_paddle.score += 1
+            left_paddle, right_paddle, ball = reset_game()
 
     pygame.quit()
 
