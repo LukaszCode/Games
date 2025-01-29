@@ -55,10 +55,8 @@ def main():
 
         # Check for ball going out of bounds
         if ball.x - ball.radius <= 0:
-            #right_paddle.score += 1
             left_paddle, right_paddle, ball = reset_game()
         elif ball.x + ball.radius >= WIDTH:
-            #left_paddle.score += 1
             left_paddle, right_paddle, ball = reset_game()
 
     pygame.quit()
