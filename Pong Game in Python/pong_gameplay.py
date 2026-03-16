@@ -42,27 +42,29 @@ def main():
     left_paddle, right_paddle, ball = reset_game()
 
     while run:
-        """Give time in seconds"""
+        # Give time in seconds
         dt = clock.tick(FPS) / 1000 
-        draw_window(WINDOW, [left_paddle, right_paddle], ball, WIDTH, HEIGHT)
-
+    
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
                 break
             
-
         keys = pygame.key.get_pressed()
-        handle_key_paddle_movement(keys, left_paddle, right_paddle)
+        handle_key_paddle_movement(keys, left_paddle, right_paddle, dt)
         
         # Pass paddles to ball.move() for collision detection
-        ball.move(HEIGHT, [left_paddle, right_paddle])
+        ball.move(HEIGHT, [left_paddle, right_paddle], dt)
 
         # Check for ball going out of bounds
         if ball.x - ball.radius <= 0:
+            right_score += 1
             left_paddle, right_paddle, ball = reset_game()
         elif ball.x + ball.radius >= WIDTH:
+            left_score += 1
             left_paddle, right_paddle, ball = reset_game()
+
+        draw_window(WINDOW, [left_paddle, right_paddle], ball, WIDTH, HEIGHT)
 
     pygame.quit()
 
