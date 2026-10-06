@@ -1,4 +1,9 @@
 # Ball object for the pong game with updated physics
+# Author : LukaszCode
+# Version : 1.1
+
+# This code defines a Ball class for a pong game, implementing realistic physics for ball movement and collision with paddles. 
+# The ball's speed increases after each paddle bounce, and the bounce angle is determined by the hit position on the paddle.
 
 import pygame
 import math
@@ -21,13 +26,12 @@ Args:
 """
 class Ball:
     MAX_VELOCITY = 5
+    START_SPEED = 350
+    MAX_SPEED = 900
+    SPEED_INCREMENT = 35
+    MAX_BOUNCE_ANGLE = math.radians(60)
 
     def __init__(self, coordinate_x, coordinate_y, radius):
-
-        START_SPEED = 350
-        MAX_SPEED = 900
-        SPEED_INCREMENT = 35
-        MAX_BOUNCE_ANGLE = math.radians(60)
         
         self.start_x = coordinate_x
         self.start_y = coordinate_y
@@ -50,12 +54,12 @@ class Ball:
         # Bounce off top wall
         if self.y - self.radius <= 0:
             self.y = self.radius
-            self.y_vel *= 1
+            self.y_vel *= -1
 
         # Bounce off bottom wall
         elif self.y + self.radius >= height:
             self.y = height - self.radius
-            self.y_vel *= 1
+            self.y_vel *= -1
 
          # Check for collision with paddles
         for paddle in paddles:
@@ -69,33 +73,31 @@ class Ball:
     with an angle based on hit position
     """
     def handle_paddle_collision(self, paddle):
+        # Hit near centre of the paddle - flat bounce
+        paddle_center = paddle.y + paddle.height / 2
+        ball_center = self.y
                 
-                # Hit near centre of the paddle - flat bounce
-                paddle_center = paddle.y + paddle.height / 2
-                ball_center = self.y
-                
-                # Hit near top of the paddle - sharper upward bounce
-                paddle_ball_intersection = ball_center - paddle_center
-                normalised_paddle_ball_intersection  = (paddle_ball_intersection / (paddle.height / 2))
+        # Hit near top of the paddle - sharper upward bounce
+        paddle_ball_intersection = ball_center - paddle_center
+        normalised_paddle_ball_intersection  = (paddle_ball_intersection / (paddle.height / 2))
 
-                # Clamp between -1 and 1 (attach ball to paddle)
-                # Hit near bottom of the paddle - sharper downward bounce
-                normalised_paddle_ball_intersection = max(-1, min(1, normalised_paddle_ball_intersection))
-                bounce_angle = normalised_paddle_ball_intersection * self.MAX_BOUNCE_ANGLE
+        # Hit near bottom of the paddle - sharper downward bounce
+        normalised_paddle_ball_intersection = max(-1, min(1, normalised_paddle_ball_intersection))
+        bounce_angle = normalised_paddle_ball_intersection * self.MAX_BOUNCE_ANGLE
 
-                # Increase speed gradually 
-                self.speed = min(self.speed + self.SPEED_INCREMENT, self.MAX_SPEED)
+        # Increase speed gradually 
+        self.speed = min(self.speed + self.SPEED_INCREMENT, self.MAX_SPEED)
 
                 
-                # Determine new horizontal direction based on incoming velocity
-                if self.x_vel < 0:
-                     self.x = paddle.x + paddle.width + self.radius
-                     self.x_vel = self.speed * math.cos(bounce_angle)
-                else:
-                     self.x = paddle.x - self.radius
-                     self.x_vel = self.speed * math.cos(bounce_angle)
+        # Determine new horizontal direction based on incoming velocity
+        if self.x_vel < 0:
+            self.x = paddle.x + paddle.width + self.radius
+            self.x_vel = self.speed * math.cos(bounce_angle)
+        else:
+            self.x = paddle.x - self.radius
+            self.x_vel = -self.speed * math.cos(bounce_angle)
                 
-                self.y_vel = self.speed * math.sin(bounce_angle)
+        self.y_vel = self.speed * math.sin(bounce_angle)
     
     """
     Resets the ball to the center of the screen.
@@ -114,8 +116,8 @@ class Ball:
     """ 
     def check_collision(self, paddle):
         # Check collision between ball and paddle
-        closest_x = max(paddle.x, min(self.x, paddle.x, paddle.width))
-        closest_y = max(paddle.y, min(self.y, paddle.y, paddle.height))
+        closest_x = max(paddle.x, min(self.x, paddle.x + paddle.width))
+        closest_y = max(paddle.y, min(self.y, paddle.y + paddle.height))
 
         distance_x = self.x - closest_x
         distance_y = self.y - closest_y
