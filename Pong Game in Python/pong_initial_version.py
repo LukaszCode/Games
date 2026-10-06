@@ -1,3 +1,9 @@
+# Author : LukaszCode
+# Version : 0.1
+
+# This code implements a simple pong game using the Pygame library. 
+# It includes the main game loop, handling user input, ball and paddle movement, collision detection, and scoring.
+
 import pygame
 import sys
 
@@ -63,7 +69,15 @@ while True:
         ball_speed_y *= -1
 
     # Ball collides with right and left part of the game board - point for oposite team
-    
+    if ball_x <= 0 or ball_x >= screen_width - ball_width:
+        ball_speed_x *= -1
+        
+        
+        # Reset the ball to the center
+        ball_x = ((screen_width // 2) - (ball_width // 2))
+        ball_y = ((screen_height // 2) - (ball_height // 2))
+
+    # Ball 
     
 
     # Ball collides with paddles - ping-pong
