@@ -1,12 +1,15 @@
-# Paddles class and objects for the pong game.
+# Author: LukaszCode
+# Version: 1.1
+
+# Paddle class and objects for the pong game.
 
 import pygame
 
 class Paddle:
-    VELOCITY = 10
+    VELOCITY = 600
 
     """
-    Initializes a new instance of a paddle with specified coordinates and dimensions.
+    Initialises a new instance of a paddle with specified coordinates and dimensions.
 
     Args:
         coordinate_x (float): The x-coordinate of the paddle's position.
@@ -20,8 +23,7 @@ class Paddle:
         self.width = paddle_width
         self.height = paddle_height
 
-    def move(self, up, height):
-        if up and self.y >= 0:
-            self.y -= self.VELOCITY
-        elif not up and self.y < height - self.height:
-            self.y += self.VELOCITY
+    def move(self, up, height, dt):
+        distance = self.VELOCITY * dt
+        self.y += -distance if up else distance
+        self.y = max(0, min(self.y, height - self.height))
